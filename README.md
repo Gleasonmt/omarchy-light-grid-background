@@ -1,42 +1,33 @@
 # Light Grid
 
-An animated theme for [Omarchy](https://omarchy.org). Light-cycles racing over a glossy neon grid, laying walls of light under a stormy sky.
+An animated background for [Omarchy](https://omarchy.org). Light-cycles racing over a glossy neon grid, laying walls of light under a stormy sky.
 
 > **Animated with [omarchy-live-wallpaper](https://github.com/Gleasonmt/omarchy-live-wallpaper).**
-> Install that plugin too (below) to make the wallpaper move and to get the
-> **Light Grid Lite** version. Without it the theme still works, with a still wallpaper.
-
+> A background, not a theme: it goes with whatever theme you use.
 ![Light Grid, moving](media/light-grid.webp)
 
 ## Install
 
-Theme and plugin together:
+You need the [live-wallpaper plugin](https://github.com/Gleasonmt/omarchy-live-wallpaper), 1.2.0 or later.
+Install the plugin and this background together:
 
 ```bash
-omarchy theme install https://github.com/Gleasonmt/omarchy-light-grid-theme && omarchy plugin add https://github.com/Gleasonmt/omarchy-live-wallpaper --enable --yes
+omarchy plugin add https://github.com/Gleasonmt/omarchy-live-wallpaper --enable --yes
+git clone --depth 1 https://github.com/Gleasonmt/omarchy-light-grid-theme ~/.config/omarchy/live-backgrounds/light-grid && omarchy restart shell
 ```
 
-or one at a time:
+If you've installed the plugin's optional `live-wallpaper` command, `live-wallpaper install https://github.com/Gleasonmt/omarchy-light-grid-theme` does the second line for you.
 
-```bash
-omarchy theme install https://github.com/Gleasonmt/omarchy-light-grid-theme
-omarchy plugin add https://github.com/Gleasonmt/omarchy-live-wallpaper --enable
-```
+Then pick **Light Grid** in Omarchy menu → Style → Background. It's offered under every theme,
+including ones you install later. Update with `live-wallpaper update`, or `git pull` in that folder.
 
-Then pick **Light Grid** in Omarchy menu → Style → Theme. The first line is the theme
-(colors, wallpaper, icons, keyboard lighting); the second makes the wallpaper move,
-and also adds **Light Grid Lite** to the picker: the same picture with only small
-parts moving, which uses the least power. Without the plugin you get the theme
-with a still wallpaper.
+## Details mode
 
-Update with `omarchy theme update` and `omarchy plugin update`.
+In details mode the picture stays still and only small details move. It uses the least power,
+which makes it good on battery or if you want a calmer desktop. Turn it on with `live-wallpaper mode details`
+(`battery-mode details` for battery only) or in Omarchy menu → Style → Live Wallpaper:
 
-## Light Grid Lite
-
-The same scene, still, with only its small details alive. It uses the least power,
-which makes it good for battery or a calmer desktop:
-
-![Light Grid Lite](media/light-grid-lite.webp)
+![Light Grid, details mode](media/light-grid-lite.webp)
 
 ## How it moves
 
@@ -58,17 +49,17 @@ covers the screen, so these are the costs while it's actually visible:
 | Mode | GPU used | Wallpaper CPU | Compositor CPU |
 |---|---|---|---|
 | Still (plugin off) | ~0% | 2% | 4% |
-| **Light Grid Lite** | ~56% | 6% | 5% |
+| **Details mode** | ~56% | 6% | 5% |
 | **Light Grid** | ~59% | 5% | 5% |
 
 *GPU used* is how busy the GPU was, weighted by its clock speed against its maximum
 (1350 MHz here). *CPU* is a share of one core.
 
-This is the heaviest of the themes. Each pixel traces a ray through a 3D scene: the
+This is the heaviest of the scenes. Each pixel traces a ray through a 3D scene: the
 glossy floor reflects the cycles, their light walls and the stormy sky, and the grid
 lines are smoothed against shimmering. The scene is the same everywhere on screen, so
 there is little hidden work to skip, and because the cycles ride across the whole grid,
-Lite still redraws most of the screen. That's why Lite saves so little here.
+details mode still redraws most of the screen. That's why details mode saves so little here.
 
 If that's more than you want, these are optional, set in
 `~/.config/omarchy/live-wallpaper.json` (see the
@@ -85,14 +76,14 @@ If that's more than you want, these are optional, set in
 The scene is `src/<name>.frag` (with `src/common.glsl`): edit it, then run
 
 ```bash
-tools/build.sh           # rebuilds live/, the still in backgrounds/ and preview.jpg
+tools/build.sh           # rebuilds live/, the still in backgrounds/
 tools/build.sh --media   # also the animated previews in media/ (a few minutes)
 ```
 
 and commit the results. Needs `qt6-shadertools`, `qt6-declarative`, ImageMagick and
 (for `--media`) ffmpeg. To try a change on your own desktop, run
-`omarchy theme update` after pushing, or copy the built files into
-`~/.config/omarchy/themes/<name>/`.
+`live-wallpaper update` after pushing, or copy the built files into
+`~/.config/omarchy/live-backgrounds/light-grid/`.
 
 ## License
 
